@@ -21,7 +21,9 @@ serve(async (req) => {
   const { statusID } = await req.json();
   try {
     const response = await fetch(
-      `https://api.twitter.com/2/tweets?ids=${statusID}&tweet.fields=created_at%2Cpublic_metrics%2Cattachments&expansions=attachments.media_keys%2Cauthor_id&media.fields=preview_image_url%2Curl&user.fields=created_at%2Cprofile_image_url`,
+      `https://api.twitter.com/2/tweets?ids=${statusID}${
+        Deno.env.get("TWITTER_SEARCH_FIELDS")
+      }`,
       {
         method: "GET",
         headers: {
